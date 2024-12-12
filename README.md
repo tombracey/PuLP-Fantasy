@@ -100,8 +100,8 @@ At the bottom of the script, the knapsack function is invoked to print the selec
 
 I set my team in the game accordingly:
 
-<img src="images/final_team.png" width="300" style="display:inline-block;">
-<img src="images/team_scores.png" width="310" style="display:inline-block;">
+![final_team](images/final_team.png)
+![team_scores](images/team_scores.png)
 
 ---
 
