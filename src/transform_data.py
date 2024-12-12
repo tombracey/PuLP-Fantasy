@@ -5,7 +5,7 @@ from tabulate import tabulate
 def transform_data():
     rt = pd.read_csv('data/rallings & thrasher notional 2019 results.csv')
     yg = pd.read_csv('data/yougov_final_mrp_poll.csv')
-    
+
     query = '''SELECT rt.PA_Name AS Constituency,
         yg.WinnerGE2024 AS Winning_Party,
         ROUND((yg.Winner_margin * (rt.turnout/100 * rt.electorate))/100 + CASE WHEN yg.`2019v2024status` LIKE '%gain%' THEN rt.majority ELSE 0 END) AS Projected_Points, 
@@ -13,7 +13,8 @@ def transform_data():
         CASE WHEN yg.`2019v2024status` LIKE '%gain%' THEN 'Attacker' ELSE 'Defender' END AS Position,
         rt.country_name AS Country
         FROM rt
-        LEFT JOIN yg ON rt.ONS_Code LIKE yg.const;
+        LEFT JOIN yg ON rt.ONS_Code LIKE yg.const
+        ORDER BY Projected_Points DESC;
         '''
 
     df = sqldf(query)
