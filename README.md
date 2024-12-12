@@ -47,7 +47,7 @@ Both datasets were downloaded as CSV files.
 
 The `pandas` module reads the CSV files and converts them into dataframes.
 
-`pandasql` is used to join and query these dataframes to create another one with more useful data for the game. The columns created are:
+`pandasql` is used to join and query the dataframes to create another one with useful data for the game. The columns created are:
 - Constituency
 - Winning_Party
 - Projected_Points
@@ -55,7 +55,7 @@ The `pandas` module reads the CSV files and converts them into dataframes.
 - Position
 - Country
 
-Projected_Points is calculated by multiplying YouGov's estimate of the winning margin in the constituency by its population and turnout rate. Bonus points are added if the constituency changes parties.
+Projected_Points is calculated by multiplying YouGov's estimate of the winning margin in the constituency by its population and turnout rate. Bonus points are added equal to the constituency's existing majority if it changes parties.
 
 Price is simply equal to the constituency's existing majority according to the Rallings/Thrasher data.
 
