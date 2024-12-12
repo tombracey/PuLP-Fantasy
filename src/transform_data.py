@@ -8,7 +8,7 @@ def transform_data():
     
     query = '''SELECT rt.PA_Name AS Constituency,
         yg.WinnerGE2024 AS Winning_Party,
-        ROUND((yg.Winner_margin/100) * (rt.turnout/100 * rt.electorate) + CASE WHEN yg.`2019v2024status` LIKE '%gain%' THEN rt.majority ELSE 0 END) AS Projected_Points, 
+        ROUND((yg.Winner_margin * (rt.turnout/100 * rt.electorate))/100 + CASE WHEN yg.`2019v2024status` LIKE '%gain%' THEN rt.majority ELSE 0 END) AS Projected_Points, 
         rt.majority AS Price,
         CASE WHEN yg.`2019v2024status` LIKE '%gain%' THEN 'Attacker' ELSE 'Defender' END AS Position,
         rt.country_name AS Country
@@ -27,12 +27,3 @@ def transform_data():
     return list_of_dicts
 
 transform_data()
-
-
-
-
-
-    # with open('transform_data_output.txt', 'w') as f:
-    #     f.write(f'{df_query}')
-
-
