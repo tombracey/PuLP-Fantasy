@@ -59,9 +59,9 @@ Projected_Points is calculated by multiplying YouGov's estimate of the winning m
 
 Price is simply equal to the constituency's existing majority according to the Rallings/Thrasher data.
 
-Rows with null values in Projected_Points are removed as they would create problems in the optimisation - this included the Speaker's seat and those Northern Ireland, which YouGov doesn't cover.
+Rows with null values in Projected_Points are removed as they would create problems later on with the optimisation - this included the Speaker's seat and those Northern Ireland, which YouGov doesn't cover.
 
-The resultant dataframe is exported to a markdown table [(transformed_data.md)](data/transformed_data.md) to review, before it's converted to a Python list of dictionaries.
+The resulting dataframe is exported to a markdown table [(transformed_data.md)](data/transformed_data.md) to review, before it's converted to a list of dictionaries.
 
 ### 2. Picking a Candidate for Northern Ireland
 
@@ -75,13 +75,13 @@ The UUP candidate was inexpensive at £3,036 and could fill the attacker role. P
 
 ### 3. Optimisation - [knapsack.py](src/knapsack.py)
 
-The `knapsack.py` script invokes the function to transform the original data, before defining a knapsack problem to find the highest sum of Projected_Points within the constraints outlined above.
+The `knapsack.py` script invokes the function to transform the original data, and defines a knapsack problem to find the highest sum of Projected_Points within the constraints outlined above.
 
-The first line in the function defines the knapsack problem with the aim of maximising the 'objective function'. The second line initialises a dictionary to map each constituency to a binary value - 1 if selected and 0 if not. The third line sets the 'objective function' to be the sum of Projected_Points values.
+The first line in the function defines the knapsack problem with the aim of maximising the 'objective function'. The second line initialises a dictionary ready to map each constituency to a binary value - 1 if selected and 0 if not. The third line sets the 'objective function' to be the sum of Projected_Points values.
 
-Then there is a line to add each of the constraints to the problem, before the .solve() method assigns the binary values to each constituency. The function returns the constituencies with a value of 1.
+Following this, there is a line to add each of the constraints to the problem, before the .solve() method assigns the binary values to every constituency. The function returns the constituencies with a value of 1.
 
-I chose to use the `PuLP` library to tackle the knapsack problem because it was relatively simple to construct after seeing a few examples, and more importantly, it automatically finds an optimal way to process this volume of data and solve the problem within a second. Before trying this library, I'd created a 'brute force knapsack' which would have calculated every possible combination of the 600+ candidates, except it would have taken my laptop over 100,000 years.
+I chose to use the `PuLP` library to tackle the knapsack problem because it was relatively simple to construct after seeing a few examples, and more importantly, it automatically finds an optimal way to solve the problem within a second. Before trying this library, I'd created a 'brute force knapsack' which would have calculated every possible combination of the 600+ candidates, except this would have taken my laptop over 100,000 years.
 
 At the bottom of the script, the knapsack function is invoked to print the selected constituencies:
 
@@ -98,14 +98,14 @@ At the bottom of the script, the knapsack function is invoked to print the selec
 {'Constituency': 'Westmorland and Lonsdale', 'Winning_Party': 'Lib Dems', 'Projected_Points': 29530.0, 'Price': 5140, 'Position': 'Attacker', 'Country': 'England'}
 ```
 
-I set up my team in the game accordingly:
+I set my team in the game accordingly:
 
-<img src="images/final_team.png" width="500" style="display:inline-block;">
-<img src="images/team_scores.png" width="510" style="display:inline-block;">
+<img src="images/final_team.png" width="300" style="display:inline-block;">
+<img src="images/team_scores.png" width="310" style="display:inline-block;">
 
 ---
 
-## How to Use
+## How to Run
 
 ### Step 1: Install Dependencies
 
@@ -117,12 +117,10 @@ pip install -r requirements.txt
 
 ### Step 2: Run the Knapsack Problem
 
-Run the `knapsack.py` script to assemble the best team from the transformed data:
+Run the `knapsack.py` script to print the best team from the transformed data:
 
 ```
 python src/knapsack.py
 ```
-
-This will print the selected constituencies.
 
 ---
