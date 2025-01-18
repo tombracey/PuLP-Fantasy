@@ -2,7 +2,11 @@
 
 ## Overview
 
-PuLP Fantasy is a project detailing how I relied on data to pick my team on a fantasy football-like game called 'Fantasy General Election'. It uses SQL to transform polling data from YouGov into the in-game price of each election candidate and how many points they could they could be expected to win. A 'knapsack' optimiser uses these values to find the best combination of players within the budget and other rules of the game. This approach helped me to come [7th place out of 10,853 players](https://fantasyelection.co.uk/league-table).
+PuLP Fantasy is a project explaining how I used data to select my team in Fantasy General Election, a game based on the 2024 UK General Election, where players built a team of parliamentary candidates before the vote and scored points based on the results.
+
+It uses SQL to join and transform constituency data and YouGov polling data to find the in-game price of each election candidate and an estimate of how many points they would win.
+
+A 'knapsack' optimiser uses these values to build the best team within the budget and rules. This approach helped me to come [7th place out of 10,853 players](https://fantasyelection.co.uk/league-table).
 
 ---
 
@@ -25,7 +29,7 @@ The aim of Fantasy General Election was to build the highest-scoring team of 11 
          (e.g. if a constituency had a 10,000 vote Labour majority and a Conservative candidate won by 5,000 votes, they would earn 15,000 points)
    - The team captain scores double points.
 4. **Diversity Requirements**:
-   - At least one candidate from England, Scotland, Wales and Northern Ireland.
+   - At least one candidate from each of England, Scotland, Wales and Northern Ireland.
    - No more than five candidates from the same political party.
 
 ---
@@ -77,11 +81,11 @@ The UUP candidate was inexpensive at £3,036 and could fill the attacker role. P
 
 The `knapsack.py` script invokes the function to transform the original data, and defines a knapsack problem to find the highest sum of Projected_Points within the constraints outlined above.
 
-The first line in the function defines the knapsack problem with the aim of maximising the 'objective function'. The second line initialises a dictionary ready to map each constituency to a binary value - 1 if selected and 0 if not. The third line sets the 'objective function' to be the sum of Projected_Points values.
+The first line in the function sets up the problem with the aim of maximising the 'objective function'. The second line initialises a dictionary ready to map each constituency to a binary value - 1 if selected and 0 if not. The third line sets the 'objective function' to be the sum of Projected_Points values.
 
-Following this, there is a line to add each of the constraints to the problem, before the .solve() method assigns the binary values to every constituency. The function returns the constituencies with a value of 1.
+Following this, there is a line to add each of the constraints to the problem, before the .solve() method assigns the binary values to each constituency. The function returns the constituencies assigned a value of 1.
 
-I chose to use the `PuLP` library to tackle the knapsack problem because it was relatively simple to construct after seeing a few examples, and more importantly, it automatically finds an optimal way to solve the problem within a second. Before trying this library, I'd created a 'brute force knapsack' which would have calculated every possible combination of the 600+ candidates, except this would have taken my laptop over 100,000 years.
+I chose to use the `PuLP` library to construct the knapsack problem because it was relatively simple compared to other alternatives, and more importantly, it automatically finds an optimal way to solve the problem within a second. Before trying this library, I created a 'brute force knapsack' which would have solved the problem by calculating every possible combination of the 600+ candidates, except this would have taken my laptop over 100,000 years.
 
 At the bottom of the script, the knapsack function is invoked to print the selected constituencies:
 
@@ -124,3 +128,4 @@ python src/knapsack.py
 ```
 
 ---
+
