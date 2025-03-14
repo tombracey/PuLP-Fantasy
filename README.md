@@ -1,12 +1,12 @@
-# PuLP Fantasy
+# Fantasy General Election Project
 
 ## Overview
 
-PuLP Fantasy is a project explaining how I used data to select my team in Fantasy General Election, a game based on the 2024 UK General Election, where players built a team of parliamentary candidates before the vote and scored points based on the results.
+A project explaining how I used data to select my team in Fantasy General Election - a game like fantasy football (FPL) but based on the 2024 UK General Election. Players had to build a team of parliamentary candidates before the vote, and scored points based on the results.
 
-It uses SQL to join and transform constituency data and YouGov polling data to find the in-game price of each election candidate and an estimate of how many points they would win.
+This repo uses SQL to join and transform constituency data and YouGov polling data to find the in-game price of each election candidate and an estimate of how many points they would win.
 
-A 'knapsack' optimiser uses these values to build the best team within the budget and rules. This approach helped me to come [7th place out of 10,853 players](https://fantasyelection.co.uk/league-table).
+A 'knapsack' optimiser then uses these values to build the team with the highest combined expected points within the budget and rules. This approach helped me to come [7th place out of 10,853 players](https://fantasyelection.co.uk/league-table).
 
 ---
 
